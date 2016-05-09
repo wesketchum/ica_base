@@ -1,0 +1,20 @@
+echo # This script is intended to be sourced.
+
+sh -c "[ `ps $$ | grep bash | wc -l` -gt 0 ] || { echo 'Please switch to the bash shell before running the artdaq-demo.'; exit; }" || exit
+
+source $ARTDAQ_PRODUCTS/setup
+
+export PRODUCTS=$INSTALL_DIR:$PRODUCTS
+export CETPKG_INSTALL=$INSTALL_DIR
+export CETPKG_J=1
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/icadaq/CAENComm-1.2/lib/x64/
+
+export ICARTDAQ_BUILD="$BASE_DIR/build_ica_base"
+export ICARTDAQ_REPO="$BASE_DIR/ica_base"
+
+mkdir -p $ICARTDAQ_BUILD
+
+echo changing directory to $ICARTDAQ_BUILD
+cd $ICARTDAQ_BUILD  # note: next line adjusts PATH based one cwd
+. $ICARTDAQ_REPO/ups/setup_for_development -p 
