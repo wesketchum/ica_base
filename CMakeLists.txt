@@ -37,10 +37,14 @@ cet_report_compiler_flags()
 
 # these are minimum required versions, not the actual product versions
 find_ups_product( cetbuildtools v3_03_00 )
+find_ups_product( gcc v4_9_2 )
 
 # macros for art_dictionary and simple_plugin
 #include(BuildPlugins)
 #include(CetTest)
+
+include_directories($ENV{CAENCOMMDIR}/include)
+link_directories($ENV{CAENCOMMDIR}/lib/x64)
 
 
 #source
