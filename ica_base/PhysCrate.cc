@@ -229,6 +229,14 @@ PhysCrate::ArmTrigger()
 
 } 
 
+int PhysCrate::BoardStatus(int i)
+{
+  if(i>=nBoards)
+    return -2;
+
+  return boards[i]->Status();
+}
+
 #if FALSE
 // Returns a pointer to a dynamically allocated memory area with the data of the event.
 DataTile*

@@ -35,6 +35,8 @@ class A2795Board
         int fillHeader(DataTile *);
         int write(int reg, int buffer);
         int read(int reg, int* buffer);
+
+	int Status();
 };
 
 #endif

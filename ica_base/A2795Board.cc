@@ -162,6 +162,13 @@ A2795Board::isDataRdy()
 	return done;
 }
 
+int A2795Board::Status()
+{
+  int status;
+  CAENComm_Read32(bdhandle, A_StatusReg,(uint32_t*) &status);
+  return status;
+}
+
 int 
 A2795Board::ArmTrigger()
 {

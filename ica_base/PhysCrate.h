@@ -32,6 +32,9 @@ class PhysCrate {
         DataTile* getData(); 
         int getId();
 
+	int NBoards() const { return nBoards; }
+	int BoardStatus(int i);
+
 };
 
 #endif
