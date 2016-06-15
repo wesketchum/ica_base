@@ -13,19 +13,12 @@
 
 #define HOST 1
 
-A2795Board::A2795Board(int nbr, int id) : 
-  boardNbr(nbr), serialNbr(0),busNbr(0),slotNbr(0),preSamples(0),mThre(0),bdhandle(0),boardId(id),nSamples(0)
+A2795Board::A2795Board(int nbr, int bus) : boardNbr(nbr), boardId(nbr) 
 {
-
-
-
-
-
-
 #ifndef _simulate_
 // Acqrs_getInstrumentData(boardId, boardname, &serialNbr, &busNbr, &slotNbr);
   int ret;
-  ret=CAENComm_OpenDevice(CAENComm_OpticalLink, 0, nbr, 0, &bdhandle);
+  ret=CAENComm_OpenDevice(CAENComm_OpticalLink, bus, nbr, 0, &bdhandle);
       if (ret != CAENComm_Success) boardId=-1;
       else 
       {
@@ -33,7 +26,7 @@ A2795Board::A2795Board(int nbr, int id) :
          //CAENComm_Write32(bdhandle, A_Signals, SIGNALS_SWRESET);
          CAENComm_Read32(bdhandle, A_StatusReg,(uint32_t*) &status);
          printf("board %d status %d\n",boardId,status);
-         boardId=status&0x7;
+         boardId=status&STATUS_SLOT_ID;
          
         //CAENComm_Write32(bdhandle, A_ControlReg_Clear, CTRL_TTLINK_MODE);
 //    CAENComm_Write32(bdhandle, A_ControlReg_Set, CTRL_ACQRUN);
@@ -41,7 +34,8 @@ A2795Board::A2795Board(int nbr, int id) :
 #else
 #endif
  serialNbr=boardNbr;
- printf ("BoardId %x serial %d bus %d slot %d\n",boardId,serialNbr, busNbr, slotNbr);
+ if (boardId!=-1) 
+   printf ("BoardId %x serial %d bus %d slot %d\n",boardId,serialNbr, busNbr, slotNbr);
 }
 
 A2795Board::~A2795Board()
