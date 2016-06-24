@@ -4,6 +4,11 @@ cet_make_library( LIBRARY_NAME ica_base_A2795Board
 		        CAENComm
 		)
 
+cet_make_library( LIBRARY_NAME ica_base_SendUDP
+		  SOURCE SendUDP.cc
+		  LIBRARIES
+		        ica_base_A2795Board
+		)
 cet_make_library( LIBRARY_NAME ica_base_PhysCrate
 		  SOURCE PhysCrate.cc
 		  LIBRARIES

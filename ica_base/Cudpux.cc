@@ -32,6 +32,7 @@ Cudp::Cudp(int localport)
 
     myaddr.sin_family       = AF_INET;
     myaddr.sin_port         = htons (localport);
+    //myaddr.sin_port         = localport;
  
     int blen = 65536;
 
@@ -43,18 +44,20 @@ Cudp::Cudp(int localport)
     port = localport;
 
 //    if (port)
-        if(bind(sock,(struct sockaddr *)&myaddr,sizeof (myaddr)) < 0)
+    int retval = bind(sock,(struct sockaddr *)&myaddr,sizeof(myaddr));
+    if(retval<0)
         { perror ("bind failed");
           throw;
         }
 
-     printf("Bound socket %d\n",myaddr.sin_port);
-     sockAddrSize = sizeof (struct sockaddr_in);            
+    printf("Bound socket %d (%d)\n",myaddr.sin_port,ntohs(myaddr.sin_port));
+     sockAddrSize = sizeof (struct sockaddr_in);
+    printf("Sock addr size %d\n",sockAddrSize);
+
 }
 
-Cudp::Cudp(int snew, int opt)
+Cudp::Cudp(int snew, int)
 {
-  (void)opt;
 
    connected = true;
    port =0;
@@ -75,6 +78,7 @@ Cudp::Connect(char *host,int toport)
     clientAddr.sin_family      = AF_INET;
     clientAddr.sin_addr.s_addr = inet_addr (host);
     clientAddr.sin_port        = htons (toport);
+    //clientAddr.sin_port        = toport;
   
  if (connect (sock, (struct sockaddr  *)&clientAddr, sizeof (clientAddr)) < 0)
 {
@@ -144,8 +148,8 @@ int
 Cudp::Answer( char *buffer,int size)
 {
   //char *inetAddr;
+
   //inetAddr = inet_ntoa(clientAddr.sin_addr);
-  inet_ntoa(clientAddr.sin_addr);
  
 printf (" udpux: Trying to answer message size %d\n",size);
 
@@ -164,6 +168,7 @@ Cudp::SendTo(char *host, int toport, char *buffer,int size)
     clientAddr.sin_family      = AF_INET;
     clientAddr.sin_addr.s_addr = inet_addr (host);
     clientAddr.sin_port        = htons (toport);
+    //clientAddr.sin_port        = toport;
 
     return  sendto (sock, buffer, size,0,
             (struct sockaddr *) &clientAddr,sockAddrSize) ;
