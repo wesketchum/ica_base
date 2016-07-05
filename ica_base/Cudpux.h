@@ -24,7 +24,7 @@ class Cudp
 
     struct sockaddr_in clientAddr;
 
-    Cudp();
+    //Cudp();
     Cudp(int port);
     Cudp(int sock,int opt);
     ~Cudp();

@@ -11,12 +11,12 @@
 #ifdef __OLDAPPLE__
 typedef int socklen_t;
 #endif
-
+/*
 Cudp::Cudp()
 {
    Cudp(0);
 }
-
+*/
 Cudp::Cudp(int localport)
 {
 //  struct sockaddr_in myaddr;

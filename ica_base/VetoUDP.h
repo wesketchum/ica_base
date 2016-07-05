@@ -1,22 +1,25 @@
-#include <string.h>
+#include <cstring>
 #include <stdio.h>
 #include <unistd.h>
 #include "Cudpux.h"
 #include <iostream>
-using namespace std;
 
-#define PORT 7654
-
-class SendUDP{
+class VetoUDP{
 
 public:
-  SendUDP();
-  int Run(unsigned int);
+  VetoUDP(const char*,int);
+  int TestRun(unsigned int);
+  int VetoOn();
+  int VetoOff();
   
 private:
 
+  int port;
+  
   Cudp myudp;
+
   int totp;
+
   char mhost[128];
   char buf[3];
   
